@@ -18,10 +18,9 @@ Create a custom resolver for `*.jacob`
 
 ```
 sudo echo 'nameserver `boot2docker ip`' > /etc/resolver/jacob
-sudo echo 'port 5353' >> /etc/resolver/jacob
 ```
 
-Now your osx should be trying to use something running on port 5353 inside the boot2docker vm to resolve the `*.jacob` domains
+Now your osx should be trying to use something running on port 53 inside the boot2docker vm to resolve the `*.jacob` domains
 
-So what we should do is create a dnsmasq container running on 5353. This dnsmasq container should then listen to other containers joining, read some meta about them.
+So what we should do is create a dnsmasq container running on 53. This dnsmasq container should then listen to other containers joining, read some meta about them.
 Then update its dns entry.

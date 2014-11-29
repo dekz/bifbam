@@ -13,10 +13,4 @@ app:
   image: ubuntu:trusty
   command: sleep 9000
   environment:
-    VIRTUAL_HOST: jacob-rocks
-  ports:
-    - "8080"
-  links:
-    - dns
-  dns:
-    - 172.17.42.1
+    VIRTUAL_HOST: test-dns-yes-yes
