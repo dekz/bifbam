@@ -14,3 +14,5 @@ app:
   command: sleep 9000
   environment:
     VIRTUAL_HOST: test-dns-yes-yes
+  ports:
+    - "8080"
