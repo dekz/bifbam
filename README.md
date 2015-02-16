@@ -1,9 +1,5 @@
-# What?
-Do meta stuff with containers
-
-# Like What?
-Want to react to docker containers coming up and down.  
-With this we can provide some fake-dns, splunk forwarding, nginx reverse proxying, status pages, service discovery.
+# What is this?
+A Reverse Proxy and DNS resolver with containers. Its aim is to be like pow.cx.
 
 # Need to add a gateway into Boot2docker
 Makes this range of ips accessible through the boot2docker gateway  
@@ -21,6 +17,3 @@ sudo echo 'nameserver `boot2docker ip`' > /etc/resolver/jacob
 ```
 
 Now your osx should be trying to use something running on port 53 inside the boot2docker vm to resolve the `*.jacob` domains
-
-So what we should do is create a dnsmasq container running on 53. This dnsmasq container should then listen to other containers joining, read some meta about them.
-Then update its dns entry.
