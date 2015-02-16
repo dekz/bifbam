@@ -1,0 +1,23 @@
+user=root
+
+{{ range $index, $value := $ }}
+  {{ $addrLen := len $value.Addresses }}
+  {{ if ge $addrLen 0 }}
+    {{ with $address := index $value.Addresses 0 }}
+address=/{{$value.Name}}.jacob/{{$address.IP}}
+address=/{{$value.Env.VIRTUAL_HOST}}.jacob/{{$address.IP}}
+
+      {{ range $index, $value2 := $ }}
+        {{ if $value2.Env.VIRTUAL_HOST }}
+          {{ if eq $value2.Env.VIRTUAL_HOST "rp" }}
+            {{ with $address := index $value2.Addresses 0 }}
+address=/{{$value.Env.VIRTUAL_HOST}}.web/{{$address.IP}}
+            {{ end }}
+          {{ end }}
+        {{ end }}
+      {{ end }}
+
+    {{ end }}
+  {{ else }}
+  {{ end }}
+{{ end }}

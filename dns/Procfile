@@ -1,0 +1,1 @@
+dockergen: docker-gen -watch -only-exposed -watch -notify "sh /app/restart" dns.tmpl /etc/dnsmasq.conf

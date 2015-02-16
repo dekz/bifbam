@@ -1,18 +1,21 @@
 dns:
-  build: .
-  command: docker-gen -interval 10 -watch -notify "sh /app/restart" dns.tmpl /etc/dnsmasq.conf
+  build: dns
   environment:
-    DOCKER_HOST: unix:///var/run/docker.sock
-    VIRTUAL_HOST: dns-guy
+    VIRTUAL_HOST: dns
   privileged: true
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
+    - dns:/app
   ports:
     - "53:53/udp"
-app:
-  image: ubuntu:trusty
-  command: sleep 9000
+rp:
+  build: rp
   environment:
-    VIRTUAL_HOST: test-dns-yes-yes
+    VIRTUAL_HOST: rp
+  privileged: true
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - rp:/app
   ports:
-    - "8080"
+    - "80:80"
+    - "443:443"
