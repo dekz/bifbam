@@ -38,7 +38,7 @@ namespace :cmd do
   task :route do
     routes = cmd('netstat -rn | grep 172.17')
     if !routes.match($boot2docker_ip)
-      raise "Routes not configured correctly"
+      raise "Routes not configured correctly\n try 'sudo route -n add 172.17.0.0/16 `boot2docker ip`'"
     end
   end
 
@@ -55,4 +55,5 @@ namespace :files do
 end
 
 task :check => [ 'var:boot2docker_ip', 'files:resolver', 'cmd:route'] do
+  puts "Looks all good to me!"
 end
