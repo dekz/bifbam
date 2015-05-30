@@ -16,7 +16,7 @@ RUN apk --update add nginx
 RUN mkdir /app
 WORKDIR /app
 
-RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+COPY nginx.conf /etc/nginx/nginx.conf
 
 ADD . /app
 CMD ["forego", "start", "-r"]
