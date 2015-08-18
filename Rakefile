@@ -1,4 +1,5 @@
 require 'logger'
+
 def logger
   @logger ||= Logger.new(STDERR).tap do |l|
     l.level = ENV['DEBUG'] ? Logger::DEBUG : Logger::WARN
@@ -24,36 +25,45 @@ def cmd cmd
   end
 end
 
+def docker_machine_name
+  ENV['DOCKER_MACHINE_NAME'] || 'dev'
+end
+
+def docker_machine_ip
+  $docker_machine_ip ||= cmd("docker-machine ip #{docker_machine_name}").chomp
+end
+
 namespace :var do
-  task :boot2docker do
-    status = cmd('boot2docker status')
-    raise 'Boot2docker not running' unless status.match(/running/)
+  task :docker_machine do
+    active = cmd("docker-machine active").chomp
+    raise 'Docker machine not running' unless active.match(docker_machine_name)
   end
-  task :boot2docker_ip => ['var:boot2docker'] do
-    $boot2docker_ip = cmd('boot2docker ip').chomp
+
+  task :docker_ip => ['var:docker_machine'] do
+    docker_machine_ip
   end
 end
 
 namespace :cmd do
   task :route do
     routes = cmd('netstat -rn | grep 172.17')
-    if !routes.match($boot2docker_ip)
-      raise "Routes not configured correctly\n try 'sudo route -n add 172.17.0.0/16 `boot2docker ip`'"
+    if !routes.match(docker_machine_ip)
+      raise "Routes not configured correctly\n try 'sudo route -n add 172.17.0.0/16 `docker-machine ip #{docker_machine_name}`'"
     end
   end
 
   task :ping do
-    cmd("ping -c 1 #{$boot2docker_ip}")
+    cmd("ping -c 1 #{docker_machine_ip}")
   end
 end
 
 namespace :files do
   task :resolver do
     check_file file: '/etc/resolver/web', desc: 'Web Resolver'
-    check_contents file: '/etc/resolver/web', str: $boot2docker_ip
+    check_contents file: '/etc/resolver/web', str: docker_machine_ip
   end
 end
 
-task :check => [ 'var:boot2docker_ip', 'files:resolver', 'cmd:route'] do
+task :check => [ 'var:docker_ip', 'files:resolver', 'cmd:route' ] do
   puts "Looks all good to me!"
 end
