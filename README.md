@@ -74,7 +74,7 @@ Note: You will need to perform this every reboot.
 Create a custom resolver for `*.web`
 
 ```
-> sudo echo 'nameserver `docker-machine ip dev`' > /etc/resolver/web
+> sudo sh -c "echo 'nameserver `docker-machine ip dev`' > /etc/resolver/web"
 ```
 
 Now OSX will be trying to resolve `.web` through the resolver running on port 53 inside the boot2docker vm.
