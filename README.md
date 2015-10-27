@@ -14,8 +14,8 @@ Here is what you're probably doing now:
 > docker ps
 CONTAINER ID        IMAGE                    COMMAND             CREATED             STATUS PORTS NAMES
 138cf74f5472        app:latest               "/start.sh"         13 minutes ago      Up 13 minutes        0.0.0.0:49155->5050/tcp   services_app_1
-# Confusing ports and whats boot2dockers ip again?
-> curl http://`boot2docker ip`:49155
+# Confusing ports and whats boot2docker ip again?
+> curl http://`docker-machine ip dev`:49155
 Bif! Bam!
 ```
 
@@ -64,7 +64,7 @@ rp:
 Makes the Boot2docker range of ips accessible.
 
 ```
-> sudo route -n add 172.17.0.0/16 `boot2docker ip`
+> sudo route -n add 172.17.0.0/16 `docker-machine ip dev`
 ```
 Now you should be able to ping the ips created by docker through boot2docker
 
@@ -74,7 +74,7 @@ Note: You will need to perform this every reboot.
 Create a custom resolver for `*.web`
 
 ```
-> sudo echo 'nameserver `boot2docker ip`' > /etc/resolver/web
+> sudo echo 'nameserver `docker-machine ip dev`' > /etc/resolver/web
 ```
 
 Now OSX will be trying to resolve `.web` through the resolver running on port 53 inside the boot2docker vm.
