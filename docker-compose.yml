@@ -1,0 +1,40 @@
+#dns:
+#  build: dns
+#  environment:
+#    VIRTUAL_HOST: dns
+#  privileged: true
+#  volumes:
+#    - /var/run/docker.sock:/var/run/docker.sock
+#    - dns:/app
+#  ports:
+#    - "53:53/udp"
+#rp:
+#  build: rp
+#  environment:
+#    VIRTUAL_HOST: rp
+#  privileged: true
+#  volumes:
+#    - /var/run/docker.sock:/var/run/docker.sock
+#    - rp:/app
+#  ports:
+#    - "80:80"
+#    - "443:443"
+dns:
+  image: dekz/bifbam:dns
+  environment:
+    VIRTUAL_HOST: dns
+  privileged: true
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+  ports:
+    - "53:53/udp"
+rp:
+  image: dekz/bifbam:rp
+  environment:
+    VIRTUAL_HOST: rp
+  privileged: true
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+  ports:
+    - "80:80"
+    - "443:443"
