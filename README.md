@@ -9,7 +9,7 @@ Bifbam makes it easy!
 Here is what you're probably doing now:
 
 ```
-> fig up
+> docker-compose up
 # Ok my containers didn't blow up, let's inspect the site in the browser
 > docker ps
 CONTAINER ID        IMAGE                    COMMAND             CREATED             STATUS PORTS NAMES
@@ -22,7 +22,7 @@ Bif! Bam!
 That sucked. What if it could be like this?
 
 ```
-> fig up
+> docker-compose up
 > curl http://app.web
 Bif! Bam!
 ```
@@ -31,13 +31,13 @@ A Reverse Proxy and DNS resolver with containers. It's like Pow.cx's younger bro
 
 ## Installation
 
-1. Create a docker-compose/fig.yml:
-2. `fig up`
+1. Create a docker-compose/docker-compose.yml:
+2. `docker-compose up`
 3. Setup gateway for Boot2docker
 4. Setup resolvers for Bifbam
 5. Configure your app
 
-Here is an example docker-compose/fig.yml:
+Here is an example docker-compose/docker-compose.yml:
 ```
 dns:
   image: dekz/bifbam:dns
@@ -92,4 +92,4 @@ app:
     - "5050"
 ```
 
-After a fig up you can now hit `app.web` in your browser.
+After a docker-compose up you can now hit `app.web` in your browser.
